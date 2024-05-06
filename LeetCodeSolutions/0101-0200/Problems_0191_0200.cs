@@ -135,7 +135,7 @@ public class Problems_0191_0200
             int levelSize = queue.Count;
 
             // Reset the rightmost on the current level
-            TreeNode rightMost = null;
+            TreeNode? rightMost = null;
 
             // Go through the entire level
             for (int i = 0; i < levelSize; i++)
