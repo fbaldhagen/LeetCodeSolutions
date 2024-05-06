@@ -368,10 +368,7 @@ public class Problems_0091_0100
             if (prevNode != null && node.val < prevNode.val)
             {
                 // If this is the first misplaced node, record it
-                if (firstMisplacedNode == null)
-                {
-                    firstMisplacedNode = prevNode;
-                }
+                firstMisplacedNode ??= prevNode;
                 // If this is the second misplaced node, record it
                 secondMisplacedNode = node;
             }
