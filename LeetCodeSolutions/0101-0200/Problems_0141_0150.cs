@@ -462,7 +462,7 @@ public class Problem_146
             _head.next = node;
         }
 
-        private void RemoveNode(LRUNode node)
+        private static void RemoveNode(LRUNode node)
         {
             LRUNode prev = node.prev;
             LRUNode next = node.next;
