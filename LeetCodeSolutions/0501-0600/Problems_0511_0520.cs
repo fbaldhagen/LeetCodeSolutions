@@ -1,4 +1,4 @@
-﻿namespace LeetCodeSolutions._0510_0600;
+﻿namespace LeetCodeSolutions._0501_0600;
 
 public class Problems_0511_0520
 {
