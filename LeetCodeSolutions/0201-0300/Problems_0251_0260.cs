@@ -103,6 +103,6 @@ public class Problems_0251_0260
             }
         }
 
-        return new int[] { num1, num2 };
+        return [num1, num2];
     }
 }
