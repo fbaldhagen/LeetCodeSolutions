@@ -45,4 +45,22 @@ public class Problems_0251_0260
             }
         }
     }
+
+    /// <summary>
+    /// Problem 258
+    /// </summary>
+    /// <param name="num"></param>
+    /// <returns></returns>
+    public static int AddDigits(int num)
+    {
+        // Solved with number theory https://en.wikipedia.org/wiki/Digital_root
+        if (num == 0)
+        {
+            return 0;
+        }
+        else
+        {
+            return 1 + (num - 1) % 9;
+        }
+    }
 }
