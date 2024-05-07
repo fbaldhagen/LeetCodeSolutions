@@ -61,7 +61,7 @@ public class Problems_0241_0250
     /// <returns></returns>
     public static bool IsAnagram(string s, string t)
     {
-        Dictionary<char, int> count = new();
+        Dictionary<char, int> count = [];
 
         if (s.Length != t.Length)
         {
@@ -94,5 +94,5 @@ public class Problems_0241_0250
         return true;
     }
 
-    // 242 - 250 are premium and skipped
+    // 243 - 250 are premium and skipped
 }
