@@ -63,4 +63,46 @@ public class Problems_0251_0260
             return 1 + (num - 1) % 9;
         }
     }
+
+    // Skipped 259 (Premium)
+
+    /// <summary>
+    /// Problem 260
+    /// </summary>
+    /// <param name="nums"></param>
+    /// <returns></returns>
+    public static int[] SingleNumber(int[] nums)
+    {
+        // Step 1: XOR all numbers to get XOR of the two single numbers
+        // (XOR operation cancels out the bits that occur an even number of times,
+        // leaving only the bits that occur an odd number of times.)
+        int xor = 0;
+        foreach (int num in nums)
+        {
+            xor ^= num;
+        }
+
+        // Step 2: Find a bit where the two single numbers differ
+        int diffBit = 1;
+        while ((xor & diffBit) == 0)
+        {
+            diffBit <<= 1;
+        }
+
+        // Step 3: Partition numbers into two groups based on the different bit
+        int num1 = 0, num2 = 0;
+        foreach (int num in nums)
+        {
+            if ((num & diffBit) != 0)
+            {
+                num1 ^= num;
+            }
+            else
+            {
+                num2 ^= num;
+            }
+        }
+
+        return new int[] { num1, num2 };
+    }
 }
