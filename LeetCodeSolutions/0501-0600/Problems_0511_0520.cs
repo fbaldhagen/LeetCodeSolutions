@@ -11,12 +11,12 @@ public class Problems_0511_0520
     public static int FindRotateSteps(string ring, string key)
     {
         // Create a dictionary where each character in the ring is mapped to a list of ints of its indices.
-        Dictionary<char, List<int>> charIndices = new();
+        Dictionary<char, List<int>> charIndices = [];
         for (int i = 0; i < ring.Length; i++)
         {
             if (!charIndices.TryGetValue(ring[i], out List<int>? value))
             {
-                value = new List<int>();
+                value = [];
                 charIndices[ring[i]] = value;
             }
 
