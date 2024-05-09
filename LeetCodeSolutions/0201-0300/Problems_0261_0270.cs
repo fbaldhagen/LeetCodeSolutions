@@ -65,4 +65,53 @@ public class Problems_0261_0270
         // Check if the result is 1, which would make it an ugly number.
         return n == 1;
     }
+
+    /// <summary>
+    /// Problem 264
+    /// </summary>
+    /// <param name="n"></param>
+    /// <returns></returns>
+    public static int NthUglyNumber(int n)
+    {
+        // Initialize an array to store the ugly numbers
+        int[] ugly = new int[n];
+
+        // The first ugly number is 1
+        ugly[0] = 1;
+
+        // Pointers to track the next ugly number to be multiplied by 2, 3, and 5 respectively
+        int p2 = 0, p3 = 0, p5 = 0;
+
+        // Iterate from the second ugly number to the nth
+        for (int i = 1; i < n; i++)
+        {
+            // Calculate the next ugly number by finding the minimum among the products of
+            // the current ugly numbers pointed by p2, p3, and p5 with 2, 3, and 5 respectively
+            ugly[i] = Math.Min(ugly[p2] * 2, Math.Min(ugly[p3] * 3, ugly[p5] * 5));
+
+            // If the next ugly number is obtained by multiplying the current ugly number pointed by p2 with 2,
+            // move the p2 pointer to the next ugly number
+            if (ugly[i] == ugly[p2] * 2)
+            {
+                p2++;
+            }
+
+            // Similarly, if the next ugly number is obtained by multiplying the current ugly number pointed by p3 with 3,
+            // move the p3 pointer to the next ugly number
+            if (ugly[i] == ugly[p3] * 3)
+            {
+                p3++;
+            }
+
+            // If the next ugly number is obtained by multiplying the current ugly number pointed by p5 with 5,
+            // move the p5 pointer to the next ugly number
+            if (ugly[i] == ugly[p5] * 5)
+            {
+                p5++;
+            }
+        }
+
+        // Return the nth ugly number
+        return ugly[n - 1];
+    }
 }
