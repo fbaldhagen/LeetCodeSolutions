@@ -114,4 +114,30 @@ public class Problems_0261_0270
         // Return the nth ugly number
         return ugly[n - 1];
     }
+
+    // 265 - 267 premium
+
+    /// <summary>
+    /// Problem 268
+    /// </summary>
+    /// <param name="nums"></param>
+    /// <returns></returns>
+    public static int MissingNumber(int[] nums)
+    {
+        // The sum of an array with values [0, n] where n is a non-negative integer
+        // can be calculated using the formula for the sum of an arithmetic series:
+        // Sum = n * (n + 1) / 2. We have n numbers, ie. one is missing.
+        
+        int n = nums.Length;
+        int sumOfComplete = n * (n + 1) / 2;
+
+        int mySum = 0;
+        
+        for (int i = 0; i < n; i++)
+        {
+            mySum += nums[i];
+        }
+
+        return sumOfComplete - mySum;
+    }
 }
