@@ -1,6 +1,4 @@
-﻿using System.Text.RegularExpressions;
-
-namespace LeetCodeSolutions._0201_0300;
+﻿namespace LeetCodeSolutions._0201_0300;
 
 public class Problems_0261_0270
 {
@@ -33,5 +31,38 @@ public class Problems_0261_0270
         //     request_at
         // ORDER BY 
         //     request_at;
+    }
+
+    /// <summary>
+    /// Problem 263
+    /// </summary>
+    /// <param name="n"></param>
+    /// <returns></returns>
+    public static bool IsUgly(int n)
+    {
+        // Ugly numbers are positive
+        if (n <= 0)
+        {
+            return false;
+        }
+
+        // Repeatedly divide the input number n by 2, 3, and 5 until it cannot be divided anymore
+        while (n % 2 == 0)
+        {
+            n /= 2;
+        }
+
+        while (n % 3 == 0)
+        {
+            n /= 3;
+        }
+
+        while (n % 5 == 0)
+        {
+            n /= 5;
+        }
+
+        // Check if the result is 1, which would make it an ugly number.
+        return n == 1;
     }
 }
