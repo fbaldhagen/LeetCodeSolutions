@@ -22,7 +22,7 @@ public class Problems_0781_0790
             double mid = low + (high - low) / 2;
 
             // Call the helper method to find fractions less than mid
-            int[] res = GetFractionsLessThanMid(arr, k, n, mid);
+            int[] res = GetFractionsLessThanMid(arr, n, mid);
 
             // Check if the k-th fraction is found
             if (res[0] == k)
@@ -46,7 +46,7 @@ public class Problems_0781_0790
         return [];
 
         // Helper method to find fractions less than mid
-        static int[] GetFractionsLessThanMid(int[] arr, int k, int n, double mid)
+        static int[] GetFractionsLessThanMid(int[] arr, int n, double mid)
         {
             // Initialize variables to track the maximum fraction less than mid and its indices
             double maxLessThanMid = 0.0;
