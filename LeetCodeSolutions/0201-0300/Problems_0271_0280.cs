@@ -93,4 +93,36 @@ public class Problems_0271_0280
 
         return 0;
     }
+
+    /// <summary>
+    /// Problem 275
+    /// </summary>
+    /// <param name="citations"></param>
+    /// <returns></returns>
+    public static int HIndexII(int[] citations)
+    {
+        int n = citations.Length;
+
+        int left = 0;
+        int right = n - 1;
+        int currHIndex = 0;
+
+        while (left <= right)
+        {
+            int mid = left + (right - left) / 2;
+
+            // calculate the potential h-index as n - current index (mid)
+            if (citations[mid] >= n - mid)
+            {
+                currHIndex = n - mid;
+                right = mid - 1;
+            }
+            else
+            {
+                left = mid + 1;
+            }
+        }
+
+        return currHIndex;
+    }
 }
