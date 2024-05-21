@@ -1,4 +1,7 @@
-﻿namespace LeetCodeSolutions._0201_0300;
+﻿using static System.Runtime.InteropServices.JavaScript.JSType;
+using System;
+
+namespace LeetCodeSolutions._0201_0300;
 
 public class Problems_0271_0280
 {
@@ -24,45 +27,70 @@ public class Problems_0271_0280
 
         // Call the recursive helper function to build the word representation
         return Process(words, num);
+
+        // Helper function to convert a number to words using the provided words array
+        static string Process(string[] words, int num)
+        {
+            string ans = "";
+
+            // Handle billions
+            if (num >= 1000000000)
+            {
+                ans += Process(words, num / 1000000000) + " Billion " + Process(words, num % 1000000000);
+            }
+            // Handle millions
+            else if (num >= 1000000)
+            {
+                ans += Process(words, num / 1000000) + " Million " + Process(words, num % 1000000);
+            }
+            // Handle thousands
+            else if (num >= 1000)
+            {
+                ans += Process(words, num / 1000) + " Thousand " + Process(words, num % 1000);
+            }
+            // Handle hundreds
+            else if (num >= 100)
+            {
+                ans += Process(words, num / 100) + " Hundred " + Process(words, num % 100);
+            }
+            // Handle numbers from 20 to 99
+            else if (num >= 20)
+            {
+                ans += words[(num - 20) / 10 + 20] + " " + Process(words, num % 10);
+            }
+            // Handle numbers from 0 to 19
+            else
+            {
+                ans += words[num];
+            }
+
+            // Trim any trailing whitespace and return the result
+            return ans.Trim();
+        }
     }
 
-    // Helper function to convert a number to words using the provided words array
-    static string Process(string[] words, int num)
+    /// <summary>
+    /// Problem 274
+    /// </summary>
+    /// <param name="citations"></param>
+    /// <returns></returns>
+    public static int HIndex(int[] citations)
     {
-        string ans = "";
+        // sort the array in ascending order.
+        Array.Sort(citations);
+        int n = citations.Length;
 
-        // Handle billions
-        if (num >= 1000000000)
+        // for each element at index i, calculate the potential h-index as n - i 
+        // (the number of papers that have citations greater than or equal to the current value).
+        for (int i = 0; i < n; i++)
         {
-            ans += Process(words, num / 1000000000) + " Billion " + Process(words, num % 1000000000);
-        }
-        // Handle millions
-        else if (num >= 1000000)
-        {
-            ans += Process(words, num / 1000000) + " Million " + Process(words, num % 1000000);
-        }
-        // Handle thousands
-        else if (num >= 1000)
-        {
-            ans += Process(words, num / 1000) + " Thousand " + Process(words, num % 1000);
-        }
-        // Handle hundreds
-        else if (num >= 100)
-        {
-            ans += Process(words, num / 100) + " Hundred " + Process(words, num % 100);
-        }
-        // Handle numbers from 20 to 99
-        else if (num >= 20)
-        {
-            ans += words[(num - 20) / 10 + 20] + " " + Process(words, num % 10);
-        }
-        // Handle numbers from 0 to 19
-        else
-        {
-            ans += words[num];
+            int h = n - i;
+            if (citations[i] >= h)
+            {
+                return h;
+            }
         }
 
-        // Trim any trailing whitespace and return the result
-        return ans.Trim();
+        return 0;
     }
 }
