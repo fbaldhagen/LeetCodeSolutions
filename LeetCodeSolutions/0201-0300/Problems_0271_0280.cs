@@ -125,4 +125,33 @@ public class Problems_0271_0280
 
         return currHIndex;
     }
+
+    /// <summary>
+    /// Problem 279
+    /// </summary>
+    /// <param name="n"></param>
+    /// <returns></returns>
+    public static int NumSquares(int n)
+    {
+        int[] dp = new int[n + 1];
+        Array.Fill(dp, int.MaxValue);
+
+        // Base case: 0 requires 0 perfect squares
+        dp[0] = 0;
+
+        for (int i = 1; i <= n; i++)
+        {
+            // Initialize j for perfect squares calculation
+            int j = 1;
+            // Iterate through perfect squares less than or equal to i
+            while (j * j <= i)
+            {
+                // Update dp[i] with the minimum of its current value and the value obtained by subtracting a perfect square and adding 1
+                dp[i] = Math.Min(dp[i], dp[i - j * j] + 1);
+                j++;
+            }
+        }
+
+        return dp[n];
+    }
 }
