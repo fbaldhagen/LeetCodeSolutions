@@ -85,3 +85,47 @@ public class Problems_0281_0290
         }
     }
 }
+
+/// <summary>
+/// Problem 284
+/// </summary>
+class PeekingIterator(IEnumerator<int> iterator)
+{
+    readonly IEnumerator<int>? _records = iterator;
+
+    // Returns the next element in the iteration without advancing the iterator.
+    public int Peek()
+    {
+        if (_records == null)
+        {
+            throw new InvalidOperationException("Invalid operation");
+        }
+
+        return _records.Current;
+        // return 0;
+    }
+
+    // Returns the next element in the iteration and advances the iterator.
+    public int Next()
+    {
+        if (_records == null)
+        {
+            throw new InvalidOperationException("Invalid operation");
+        }
+
+        var res = _records.Current;
+        _records.MoveNext();
+        return res;
+    }
+
+    // Returns false if the iterator is refering to the end of the array of true otherwise.
+    public bool HasNext()
+    {
+        if (_records == null)
+        {
+            return false;
+        }
+
+        return _records.Current != 0;
+    }
+}
