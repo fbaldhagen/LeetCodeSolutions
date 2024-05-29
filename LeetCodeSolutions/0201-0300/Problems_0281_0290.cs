@@ -84,6 +84,36 @@ public class Problems_0281_0290
             nums[i] = 0;
         }
     }
+
+    /// <summary>
+    /// Problem 287
+    /// </summary>
+    /// <param name="nums"></param>
+    /// <returns></returns>
+    public static int FindDuplicate(int[] nums)
+    {
+        // Initialize the slow and fast pointers
+        int slow = nums[0];
+        int fast = nums[0];
+
+        // Duplicate element will create a cycle
+        // Move slow one step and fast 2 steps
+        do
+        {
+            slow = nums[slow];
+            fast = nums[nums[fast]];
+        } while (slow != fast);
+
+        // Find the entry point of the cycle
+        slow = nums[0];
+        while (slow != fast)
+        {
+            slow = nums[slow];
+            fast = nums[fast];
+        }
+
+        return slow;
+    }
 }
 
 /// <summary>
