@@ -114,6 +114,73 @@ public class Problems_0281_0290
 
         return slow;
     }
+
+    /// <summary>
+    /// Problem 289
+    /// </summary>
+    /// <param name="board"></param>
+    public static void GameOfLife(int[][] board)
+    {
+        int m = board.Length;
+        int n = board[0].Length;
+
+        // Iterate through each cell to compute the next state
+        for (int row = 0; row < m; row++)
+        {
+            for (int col = 0; col < n; col++)
+            {
+                int liveNeighbors = CountLiveNeighbors(row, col);
+
+                // Use 2 bits to store both current and next states
+                if (board[row][col] == 1 && (liveNeighbors == 2 || liveNeighbors == 3))
+                {
+                    board[row][col] = 3; // 11 in binary (current state 1, next state 1)
+                }
+                if (board[row][col] == 0 && liveNeighbors == 3)
+                {
+                    board[row][col] = 2; // 10 in binary (current state 0, next state 1)
+                }
+            }
+        }
+
+        // Update the board to the next state
+        for (int row = 0; row < m; row++)
+        {
+            for (int col = 0; col < n; col++)
+            {
+                board[row][col] >>= 1; // Move to the next state
+            }
+        }
+
+        int CountLiveNeighbors(int row, int col)
+        {
+            int count = 0;
+            int m = board.Length;
+            int n = board[0].Length;
+
+            for (int i = -1; i <= 1; i++)
+            {
+                for (int j = -1; j <= 1; j++)
+                {
+                    if (i == 0 && j == 0)
+                    {
+                        continue;
+                    }
+
+                    int r = row + i;
+                    int c = col + j;
+
+                    // If we're in bounds and the cell is 'alive', increment count by 1.
+                    if (r >= 0 && r < m && c >= 0 && c < n && (board[r][c] & 1) == 1)
+                    {
+                        count++;
+                    }
+                }
+            }
+
+            return count;
+        }
+    }
 }
 
 /// <summary>
