@@ -181,6 +181,56 @@ public class Problems_0281_0290
             return count;
         }
     }
+
+    /// <summary>
+    /// Problem 290
+    /// </summary>
+    /// <param name="pattern"></param>
+    /// <param name="s"></param>
+    /// <returns></returns>
+    public static bool WordPattern(string pattern, string s)
+    {
+        Dictionary<string, char> stringToCharMap = [];
+        Dictionary<char, string> charToStringMap = [];
+
+        string[] words = s.Split(' ');
+
+        // Check if the number of words matches the length of the pattern
+        if (words.Length != pattern.Length)
+        {
+            return false;
+        }
+
+        for (int i = 0; i < words.Length; i++)
+        {
+            string word = words[i];
+            char ch = pattern[i];
+
+            if (stringToCharMap.TryGetValue(word, out char value))
+            {
+                // If the word is already mapped to a different character, return false
+                if (value != ch)
+                {
+                    return false;
+                }
+            }
+            else
+            {
+                // If the character is already mapped to a different word, return false
+                if (charToStringMap.ContainsKey(ch))
+                {
+                    return false;
+                }
+
+                // Create the mapping in both dictionaries
+                stringToCharMap[word] = ch;
+                charToStringMap[ch] = word;
+            }
+        }
+
+        return true;
+    }
+
 }
 
 /// <summary>
