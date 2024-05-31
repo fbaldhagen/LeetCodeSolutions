@@ -15,3 +15,32 @@ public class Problems_0291_0300
     }
 
 }
+
+
+/// <summary>
+/// Problem 295
+/// </summary>
+public class MedianFinder
+{
+    private readonly PriorityQueue<int, int> left = new();
+    private readonly PriorityQueue<int, int> right = new();
+    bool odd = false;
+
+    public void AddNum(int n)
+    {
+        odd = !odd;
+        int m = right.EnqueueDequeue(n, -n);
+        left.Enqueue(m, m);
+
+        if (left.Count - 1 > right.Count)
+        {
+            m = left.Dequeue();
+            right.Enqueue(m, -m);
+        }
+    }
+
+    public double FindMedian()
+    {
+        return odd ? left.Peek() : (left.Peek() + right.Peek()) / 2.0;
+    }
+}
