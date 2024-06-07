@@ -45,7 +45,7 @@ public class Problems_0301_0310
     /// </summary>
     /// <param name="s"></param>
     /// <returns></returns>
-    public IList<string> RemoveInvalidParentheses(string s)
+    public static IList<string> RemoveInvalidParentheses(string s)
     {
         IList<string> result = [];
 
@@ -125,6 +125,30 @@ public class Problems_0301_0310
     }
 
     /// <summary>
+    /// Problem 303
+    /// </summary>
+    public class NumArray
+    {
+        private readonly int[] sumArray;
+        public NumArray(int[] nums)
+        {
+            sumArray = new int[nums.Length];
+
+            int currSum = 0;
+            for (int i = 0; i < nums.Length; i++)
+            {
+                currSum += nums[i];
+                sumArray[i] = currSum;
+            }
+        }
+
+        public int SumRange(int left, int right)
+        {
+            return left == 0 ? sumArray[right] : sumArray[right] - sumArray[left - 1];
+        }
+    }
+
+    /// <summary>
     /// Problem 310
     /// </summary>
     /// <param name="n"></param>
@@ -194,3 +218,5 @@ public class Problems_0301_0310
         return result;
     }
 }
+
+
