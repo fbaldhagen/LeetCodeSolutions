@@ -16,6 +16,71 @@ public class Problems_0291_0300
         return n % 4 != 0;
     }
 
+    /// <summary>
+    /// Problem 299
+    /// </summary>
+    /// <param name="secret"></param>
+    /// <param name="guess"></param>
+    /// <returns></returns>
+    public static string GetHint(string secret, string guess)
+    {
+        int bulls = 0;
+        int cows = 0;
+
+        Dictionary<char, int> dict = [];
+
+        foreach (char c in secret)
+        {
+            if (dict.TryGetValue(c, out int value))
+            {
+                dict[c] = ++value;
+            }
+            else
+            {
+                dict.Add(c, 1);
+            }
+        }
+
+        // Find all bulls
+        for (int i = 0; i < guess.Length; i++)
+        {
+            if (guess[i] == secret[i])
+            {
+                bulls++;
+
+                int value = dict[guess[i]];
+                if (value == 1)
+                {
+                    dict.Remove(guess[i]);
+                }
+                else
+                {
+                    dict[guess[i]] = --value;
+                }
+            }
+        }
+
+
+        // Find cows
+        for (int i = 0; i < guess.Length; i++)
+        {
+            if (guess[i] != secret[i] && dict.TryGetValue(guess[i], out int value))
+            {
+                cows++;
+
+                if (value == 1)
+                {
+                    dict.Remove(guess[i]);
+                }
+                else
+                {
+                    dict[guess[i]] = --value;
+                }
+            }
+        }
+
+        return bulls + "A" + cows + "B";
+    }
 }
 
 
@@ -63,7 +128,7 @@ public class Codec
         return string.Join(",", result);
     }
 
-    private void SerializeHelper(TreeNode node, List<string> result)
+    private static void SerializeHelper(TreeNode node, List<string> result)
     {
         if (node == null)
         {
