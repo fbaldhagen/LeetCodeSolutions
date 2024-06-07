@@ -149,6 +149,47 @@ public class Problems_0301_0310
     }
 
     /// <summary>
+    /// Problem 304
+    /// </summary>
+    public class NumMatrix
+    {
+        private readonly int[][] prefixSum;
+
+        public NumMatrix(int[][] matrix)
+        {
+            int rows = matrix.Length;
+            int cols = matrix[0].Length;
+
+            prefixSum = new int[rows + 1][];
+
+            for (int i = 0; i <= rows; i++)
+            {
+                prefixSum[i] = new int[cols + 1];
+            }
+
+            for (int r = 1; r <= rows; r++)
+            {
+                for (int c = 1; c <= cols; c++)
+                {
+                    prefixSum[r][c] = matrix[r - 1][c - 1]
+                                    + prefixSum[r - 1][c]
+                                    + prefixSum[r][c - 1]
+                                    - prefixSum[r - 1][c - 1];
+                }
+            }
+        }
+
+        public int SumRegion(int row1, int col1, int row2, int col2)
+        {
+            return prefixSum[row2 + 1][col2 + 1]
+                 - prefixSum[row1][col2 + 1]
+                 - prefixSum[row2 + 1][col1]
+                 + prefixSum[row1][col1];
+        }
+    }
+
+
+    /// <summary>
     /// Problem 310
     /// </summary>
     /// <param name="n"></param>
