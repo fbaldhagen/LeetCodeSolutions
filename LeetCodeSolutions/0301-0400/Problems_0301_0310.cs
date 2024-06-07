@@ -3,6 +3,44 @@
 public class Problems_0301_0310
 {
     /// <summary>
+    /// Problem 300
+    /// </summary>
+    /// <param name="nums"></param>
+    /// <returns></returns>
+    public static int LengthOfLIS(int[] nums)
+    {
+        int len = 0;
+        int[] tails = new int[nums.Length];
+
+        foreach (int num in nums)
+        {
+            int left = 0;
+            int right = len;
+
+            while (left < right)
+            {
+                int mid = left + (right - left) / 2;
+                if (tails[mid] < num)
+                {
+                    left = mid + 1;
+                }
+                else
+                {
+                    right = mid;
+                }
+            }
+
+            tails[left] = num;
+            if (left == len)
+            {
+                len++;
+            }
+        }
+
+        return len;
+    }
+
+    /// <summary>
     /// Problem 310
     /// </summary>
     /// <param name="n"></param>
