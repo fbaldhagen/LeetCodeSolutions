@@ -41,6 +41,90 @@ public class Problems_0301_0310
     }
 
     /// <summary>
+    /// Problem 301
+    /// </summary>
+    /// <param name="s"></param>
+    /// <returns></returns>
+    public IList<string> RemoveInvalidParentheses(string s)
+    {
+        IList<string> result = [];
+
+        if (string.IsNullOrEmpty(s))
+        {
+            return result;
+        }
+
+        Queue<string> queue = [];
+        HashSet<string> visited = [];
+
+        queue.Enqueue(s);
+        visited.Add(s);
+
+        bool found = false;
+
+        while (queue.Count > 0)
+        {
+            int size = queue.Count;
+
+            for (int i = 0; i < size; i++)
+            {
+                string curr = queue.Dequeue();
+
+                if (IsValid(curr))
+                {
+                    result.Add(curr);
+                    found = true;
+                }
+
+                if (found)
+                {
+                    continue;
+                }
+
+                for (int j = 0; j < curr.Length; j++)
+                {
+                    string next = string.Concat(curr.AsSpan(0, j), curr.AsSpan(j + 1));
+
+                    if (!visited.Contains(next))
+                    {
+                        queue.Enqueue(next);
+                        visited.Add(next);
+                    }
+                }
+            }
+
+            if (found)
+            {
+                break;
+            }
+        }
+
+        return result.Count == 0 ? [""] : result;
+
+        static bool IsValid(string s)
+        {
+            int count = 0;
+            foreach (char c in s)
+            {
+                if (c == '(')
+                {
+                    count++;
+                }
+                if (c == ')')
+                {
+                    count--;
+                    if (count < 0)
+                    {
+                        return false;
+                    }
+                }
+            }
+
+            return count == 0;
+        }
+    }
+
+    /// <summary>
     /// Problem 310
     /// </summary>
     /// <param name="n"></param>
