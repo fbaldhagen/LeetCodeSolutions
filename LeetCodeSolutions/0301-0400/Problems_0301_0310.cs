@@ -244,6 +244,97 @@ public class Problems_0301_0310
     }
 
     /// <summary>
+    /// Problem 307
+    /// </summary>
+    public class NumArrayII
+    {
+        private readonly int[] segmentTree;
+        private readonly int n;
+
+        /// <summary>
+        /// Initializes a new instance of the <see cref="NumArrayII"/> class.
+        /// </summary>
+        /// <param name="nums">The integer array to be managed.</param>
+        public NumArrayII(int[] nums)
+        {
+            n = nums.Length;
+            segmentTree = new int[2 * n];
+            BuildSegmentTree(nums);
+        }
+
+        /// <summary>
+        /// Builds the segment tree from the provided integer array.
+        /// </summary>
+        /// <param name="nums">The integer array used to build the segment tree.</param>
+        private void BuildSegmentTree(int[] nums)
+        {
+            for (int i = n, j = 0; i < 2 * n; i++, j++)
+            {
+                segmentTree[i] = nums[j];
+            }
+            for (int i = n - 1; i > 0; --i)
+            {
+                segmentTree[i] = segmentTree[i * 2] + segmentTree[i * 2 + 1];
+            }
+        }
+
+        /// <summary>
+        /// Updates the value at the specified index of the array.
+        /// </summary>
+        /// <param name="index">The index of the element to update.</param>
+        /// <param name="val">The new value to set at the specified index.</param>
+        public void Update(int index, int val)
+        {
+            index += n;
+            segmentTree[index] = val;
+            while (index > 0)
+            {
+                int left = index;
+                int right = index;
+                if (index % 2 == 0)
+                {
+                    right = index + 1;
+                }
+                else
+                {
+                    left = index - 1;
+                }
+                segmentTree[index / 2] = segmentTree[left] + segmentTree[right];
+                index /= 2;
+            }
+        }
+
+        /// <summary>
+        /// Calculates the sum of elements in the array between the specified range [left, right].
+        /// </summary>
+        /// <param name="left">The starting index of the range (inclusive).</param>
+        /// <param name="right">The ending index of the range (inclusive).</param>
+        /// <returns>The sum of elements in the specified range.</returns>
+        public int SumRange(int left, int right)
+        {
+            left += n;
+            right += n;
+            int sum = 0;
+            while (left <= right)
+            {
+                if (left % 2 == 1)
+                {
+                    sum += segmentTree[left];
+                    left++;
+                }
+                if (right % 2 == 0)
+                {
+                    sum += segmentTree[right];
+                    right--;
+                }
+                left /= 2;
+                right /= 2;
+            }
+            return sum;
+        }
+    }
+
+    /// <summary>
     /// Problem 310
     /// </summary>
     /// <param name="n"></param>
