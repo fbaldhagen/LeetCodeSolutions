@@ -188,6 +188,60 @@ public class Problems_0301_0310
         }
     }
 
+    /// <summary>
+    /// Problem 306
+    /// </summary>
+    /// <param name="num"></param>
+    /// <returns></returns>
+    public static bool IsAdditiveNumber(string num)
+    {
+        int n = num.Length;
+
+        // Helper function to check if a number string is valid
+        bool IsValid(string number)
+        {
+            return !(number.Length > 1 && number[0] == '0');
+        }
+
+        // Helper function to perform DFS to find additive sequence
+        bool DFS(int start, long prev1, long prev2, int count)
+        {
+            if (start == n)
+            {
+                return count >= 3;
+            }
+
+            long current = 0;
+            for (int i = start; i < n; i++)
+            {
+                // Avoid numbers with leading zeros
+                if (i > start && num[start] == '0')
+                {
+                    break;
+                }
+
+                current = current * 10 + (num[i] - '0');
+
+                // If count is less than 2, we need at least two numbers to start checking
+                if (count < 2 || current == prev1 + prev2)
+                {
+                    if (DFS(i + 1, prev2, current, count + 1))
+                    {
+                        return true;
+                    }
+                }
+                else if (current > prev1 + prev2)
+                {
+                    break;
+                }
+            }
+
+            return false;
+        }
+
+        // Start the DFS from the first character
+        return DFS(0, 0, 0, 0);
+    }
 
     /// <summary>
     /// Problem 310
