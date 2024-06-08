@@ -197,12 +197,6 @@ public class Problems_0301_0310
     {
         int n = num.Length;
 
-        // Helper function to check if a number string is valid
-        bool IsValid(string number)
-        {
-            return !(number.Length > 1 && number[0] == '0');
-        }
-
         // Helper function to perform DFS to find additive sequence
         bool DFS(int start, long prev1, long prev2, int count)
         {
