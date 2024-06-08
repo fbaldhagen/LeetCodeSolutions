@@ -329,6 +329,30 @@ public class Problems_0301_0310
     }
 
     /// <summary>
+    /// Problem 309
+    /// </summary>
+    /// <param name="prices"></param>
+    /// <returns></returns>
+    public static int MaxProfit(int[] prices)
+    {
+        int sold = int.MinValue;
+        int hold = int.MinValue;
+        int profit = 0;
+
+        foreach (int price in prices)
+        {
+            int temp = sold;
+
+            sold = hold + price;
+            hold = Math.Max(hold, profit - price);
+
+            profit = Math.Max(profit, temp);
+        }
+
+        return Math.Max(sold, profit);
+    }
+
+    /// <summary>
     /// Problem 310
     /// </summary>
     /// <param name="n"></param>
@@ -398,5 +422,3 @@ public class Problems_0301_0310
         return result;
     }
 }
-
-
