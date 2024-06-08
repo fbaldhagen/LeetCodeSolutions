@@ -127,7 +127,7 @@ public class Problems_0121_0130
         return maxSum;
 
         // Recursive function to calculate the maximum path sum that includes the current node
-        int CalculateMaxPathSum(TreeNode node)
+        int CalculateMaxPathSum(TreeNode? node)
         {
             if (node is null)
             {
@@ -197,9 +197,9 @@ public class Problems_0121_0130
     /// <returns></returns>
     public static IList<IList<string>> FindLadders(string beginWord, string endWord, IList<string> wordList)
     {
-        IList<IList<string>> ans = new List<IList<string>>();
+        IList<IList<string>> ans = [];
         // Reverse graph starting from endWord
-        Dictionary<string, HashSet<string>> reverse = new();
+        Dictionary<string, HashSet<string>> reverse = [];
         // Remove duplicate words
         HashSet<string> wordSet = new(wordList);
         // Remove the first word to avoid cycle path
@@ -209,7 +209,7 @@ public class Problems_0121_0130
         // First layer has only beginWord
         queue.Enqueue(beginWord);
         // Store nextLayer nodes
-        HashSet<string> nextLevel = new();
+        HashSet<string> nextLevel = [];
         // Find endWord flag
         bool findEnd = false;
 
@@ -224,7 +224,7 @@ public class Problems_0121_0130
                     // Construct the reverse graph from endWord
                     if (!reverse.TryGetValue(next, out HashSet<string>? value))
                     {
-                        value = new HashSet<string>();
+                        value = [];
                         reverse[next] = value;
                     }
 
@@ -264,10 +264,10 @@ public class Problems_0121_0130
             return ans;
         }
 
-        HashSet<string> path = new()
-        {
+        HashSet<string> path =
+        [
             endWord
-        };
+        ];
 
         // Traverse reverse graph from endWord to beginWord
         FindPath(endWord, beginWord, reverse, ans, path);
@@ -348,10 +348,10 @@ public class Problems_0121_0130
         queue.Enqueue(beginWord);
 
         // Initialize a HashSet to keep track of visited words
-        HashSet<string> visited = new()
-        {
+        HashSet<string> visited =
+        [
             beginWord
-        };
+        ];
 
         // Initialize a variable to keep track of transformation steps
         int steps = 1;
@@ -553,7 +553,7 @@ public class Problems_0121_0130
             board[x][y] = 'T';
 
             // Define 4-directional neighbors
-            int[][] directions = { new int[] { 1, 0 }, new int[] { -1, 0 }, new int[] { 0, 1 }, new int[] { 0, -1 } };
+            int[][] directions = [[1, 0], [-1, 0], [0, 1], [0, -1]];
 
             // Explore neighbors
             foreach (int[] dir in directions)
