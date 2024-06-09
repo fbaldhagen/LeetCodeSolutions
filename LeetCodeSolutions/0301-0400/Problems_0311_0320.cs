@@ -1,4 +1,6 @@
-﻿namespace LeetCodeSolutions._0301_0400;
+﻿using LeetCodeSolutions.Structures;
+
+namespace LeetCodeSolutions._0301_0400;
 
 public class Problems_0311_0320
 {
@@ -39,5 +41,39 @@ public class Problems_0311_0320
         }
 
         return dp[1, n];
+    }
+
+    /// <summary>
+    /// Problem 313
+    /// </summary>
+    /// <param name="n"></param>
+    /// <param name="primes"></param>
+    /// <returns></returns>
+    public static int NthSuperUglyNumber(int n, int[] primes)
+    {
+        PriorityQueue<int, int> pq = new();
+        int prev = 1;
+
+        for (int i = 1; i < n; i++)
+        {
+            for (int p = 0;  p < primes.Length; p++)
+            {
+                long factor = (long)primes[p] * (long)prev;
+
+                if (factor <= Int32.MaxValue)
+                {
+                    pq.Enqueue((int)factor, (int) factor);
+                }
+            }
+
+            int next = pq.Dequeue();
+            while (next == prev)
+            {
+                next = pq.Dequeue();
+            }
+            prev = next;
+        }
+
+        return prev;
     }
 }
