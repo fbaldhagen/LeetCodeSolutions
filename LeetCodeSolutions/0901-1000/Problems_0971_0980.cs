@@ -5,6 +5,44 @@ namespace LeetCodeSolutions._0901_1000;
 public class Problems_0971_0980
 {
     /// <summary>
+    /// Problem 974
+    /// </summary>
+    /// <param name="nums"></param>
+    /// <param name="k"></param>
+    /// <returns></returns>
+    public static int SubarraysDivByK(int[] nums, int k)
+    {
+        int result = 0;
+        Dictionary<int, int> remainderMap = [];
+        remainderMap[0] = 1; // Initialize with 0 remainder with frequency 1
+
+        int runningSum = 0;
+
+        for (int i = 0; i < nums.Length; i++)
+        {
+            runningSum += nums[i];
+            int remainder = runningSum % k;
+
+            // Handle negative remainders
+            if (remainder < 0)
+            {
+                remainder += k;
+            }
+
+            if (remainderMap.TryGetValue(remainder, out int count))
+            {
+                result += count;
+                remainderMap[remainder] = count + 1;
+            }
+            else
+            {
+                remainderMap[remainder] = 1;
+            }
+        }
+
+        return result;
+    }
+    /// <summary>
     /// Problem 979
     /// </summary>
     /// <param name="root"></param>
@@ -16,7 +54,7 @@ public class Problems_0971_0980
         return moves;
 
         // Helper method to perform DFS and calculate the balance of coins
-        int DFS(TreeNode node)
+        int DFS(TreeNode? node)
         {
             // Base case: if the node is null, return 0 balance
             if (node == null)
