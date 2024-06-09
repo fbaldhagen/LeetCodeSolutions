@@ -76,4 +76,55 @@ public class Problems_0311_0320
 
         return prev;
     }
+
+    /// <summary>
+    /// Problem 315
+    /// </summary>
+    /// <param name="nums"></param>
+    /// <returns></returns>
+    public static IList<int> CountSmaller(int[] nums)
+    {
+        int n = nums.Length;
+        int[] result = new int[n];
+        int[] sortedNums = (int[])nums.Clone();
+        Array.Sort(sortedNums);
+
+        Dictionary<int, int> ranks = [];
+        for (int i = 0; i < n; i++)
+        {
+            ranks[sortedNums[i]] = i + 1;
+        }
+
+        int[] bit = new int[n + 1];
+
+        for (int i = n - 1; i >= 0; i--)
+        {
+            int rank = ranks[nums[i]];
+            result[i] = Query(rank - 1);
+            Update(rank);
+        }
+
+        return result;
+
+
+        void Update(int index)
+        {
+            while (index < bit.Length)
+            {
+                bit[index]++;
+                index += index & -index;
+            }
+        }
+
+        int Query(int index)
+        {
+            int sum = 0;
+            while (index > 0)
+            {
+                sum += bit[index];
+                index -= index & -index;
+            }
+            return sum;
+        }
+    }
 }
