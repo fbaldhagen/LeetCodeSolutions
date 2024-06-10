@@ -136,45 +136,32 @@ public class Problems_0311_0320
     /// <returns></returns>
     public static string RemoveDuplicateLetters(string s)
     {
-        Dictionary<char, int> freq = [];
-
-        foreach (char c in s)
-        {
-            if (!freq.TryGetValue(c, out int value))
-            {
-                value = 0;
-                freq[c] = value;
-            }
-            freq[c] = ++value;
-        }
-
         Stack<char> stack = [];
-        HashSet<char> inStack = [];
+        HashSet<char> seen = [];
+        Dictionary<char, int> lastOcc = [];
 
-        foreach (char c in s)
+        for (int i = 0; i < s.Length; i++)
         {
-            freq[c]--;
-
-            if (inStack.Contains(c))
-            {
-                continue;
-            }
-
-            while (stack.Count > 0 && c < stack.Peek() && freq[stack.Peek()] > 0)
-            {
-                inStack.Remove(stack.Pop());
-            }
-
-            stack.Push(c);
-            inStack.Add(c);
+            lastOcc[s[i]] = i;
         }
 
-        char[] result = new char[stack.Count];
-        for (int i = stack.Count - 1; i >= 0; i--)
+        for (int i = 0; i < s.Length; i++)
         {
-            result[i] = stack.Pop();
+            char c = s[i];
+
+            if (!seen.Contains(c))
+            {
+                while (stack.Count > 0 && c < stack.Peek() && i < lastOcc[stack.Peek()])
+                {
+                    seen.Remove(stack.Pop());
+                }
+                seen.Add(c);
+                stack.Push(c);
+            }
         }
 
+        char[] result = [.. stack];
+        Array.Reverse(result);
         return new string(result);
     }
 }
