@@ -164,4 +164,47 @@ public class Problems_0311_0320
         Array.Reverse(result);
         return new string(result);
     }
+
+    /// <summary>
+    /// Problem 318
+    /// </summary>
+    /// <param name="words"></param>
+    /// <returns></returns>
+    public static int MaxProduct(string[] words)
+    {
+        int n = words.Length;
+        int[] masks = new int[n];
+        int[] lengths = new int[n];
+
+        // create a bitmask that represents the characters present in the word
+        for (int i = 0; i < n; i++)
+        {
+            int mask = 0;
+
+            foreach (char c in words[i])
+            {
+                mask |= 1 << (c - 'a');
+            }
+
+            masks[i] = mask;
+            lengths[i] = words[i].Length;
+        }
+
+        int maxProd = 0;
+
+        // check if their bitmasks have any common bits set using bitwise AND (&).
+        // If the result is 0, it means the words do not share any common letters.
+        for (int i = 0; i < n; i++)
+        {
+            for (int j = i + 1; j < n; j++)
+            {
+                if ((masks[i] & masks[j]) == 0)
+                {
+                    maxProd = Math.Max(maxProd, lengths[i] * lengths[j]);
+                }
+            }
+        }
+
+        return maxProd;
+    }
 }
