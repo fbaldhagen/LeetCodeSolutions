@@ -207,4 +207,19 @@ public class Problems_0311_0320
 
         return maxProd;
     }
+
+    /// <summary>
+    /// Problem 319
+    /// </summary>
+    /// <param name="n"></param>
+    /// <returns></returns>
+    public static int BulbSwitch(int n)
+    {
+        /// Returns the number of bulbs that remain on after n rounds.
+        /// A bulb ends up on if it is toggled an odd number of times, 
+        /// which occurs if the bulb is at a position that is a perfect square.
+        /// Therefore, the number of bulbs that remain on is the number of perfect
+        /// squares less than or equal to n, which is given by the integer part of sqrt(n)
+        return (int)Math.Sqrt(n);
+    }
 }
