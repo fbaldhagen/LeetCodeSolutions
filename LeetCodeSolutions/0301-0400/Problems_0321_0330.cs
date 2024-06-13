@@ -91,4 +91,40 @@ public class Problems_0321_0330
             return j == nums2.Length || (i < nums1.Length && nums1[i] > nums2[j]);
         }
     }
+
+    /// <summary>
+    /// Problem 322
+    /// </summary>
+    /// <param name="coins"></param>
+    /// <param name="amount"></param>
+    /// <returns></returns>
+    public static int CoinChange(int[] coins, int amount)
+    {
+        // Initialize a dp array to store the minimum number of coins for each amount
+        int[] dp = new int[amount + 1];
+
+        // Initialize dp array with a value larger than any possible number of coins (amount + 1)
+        Array.Fill(dp, amount + 1);
+
+        // Base case: 0 coins are needed to make amount 0
+        dp[0] = 0;
+
+        // Iterate through each amount from 1 to amount
+        for (int i = 1; i <= amount; i++)
+        {
+            // Iterate through each coin denomination
+            foreach (int coin in coins)
+            {
+                // If the current coin can be used to form the current amount
+                if (coin <= i)
+                {
+                    // Update dp[i] by taking the minimum of its current value and 1 + dp[i - coin]
+                    dp[i] = Math.Min(dp[i], 1 + dp[i - coin]);
+                }
+            }
+        }
+
+        // If dp[amount] is still amount + 1, it means no valid combination was found
+        return dp[amount] > amount ? -1 : dp[amount];
+    }
 }
