@@ -127,4 +127,43 @@ public class Problems_0321_0330
         // If dp[amount] is still amount + 1, it means no valid combination was found
         return dp[amount] > amount ? -1 : dp[amount];
     }
+
+    /// <summary>
+    /// Problem 324
+    /// </summary>
+    /// <param name="nums"></param>
+    public static void WiggleSort(int[] nums)
+    {
+        Array.Sort(nums);
+        int[] result = new int[nums.Length];
+        int mid;
+
+        if (nums.Length % 2 == 0)
+        {
+            mid = nums.Length / 2;
+        }
+        else
+        {
+            mid = nums.Length / 2 + 1;
+        }
+
+        int evenIndex = mid - 1;
+        int oddIndex = nums.Length - 1;
+
+        for (int i = 0; i < nums.Length; i++)
+        {
+            if (i % 2 == 0)
+            {
+                result[i] = nums[evenIndex];
+                evenIndex--;
+            }
+            else
+            {
+                result[i] = nums[oddIndex];
+                oddIndex--;
+            }
+        }
+
+        Array.Copy(result, nums, nums.Length);
+    }
 }
