@@ -166,4 +166,16 @@ public class Problems_0321_0330
 
         Array.Copy(result, nums, nums.Length);
     }
+
+    /// <summary>
+    /// Problem 326
+    /// </summary>
+    /// <param name="n"></param>
+    /// <returns></returns>
+    public static bool IsPowerOfThree(int n)
+    {
+        // 3^19 (1162261467) is the largest power of 3 that fits in an int.
+        // Any power of three will be a divisor of 1162261467
+        return n > 0 && (1162261467 % n == 0);
+    }
 }
