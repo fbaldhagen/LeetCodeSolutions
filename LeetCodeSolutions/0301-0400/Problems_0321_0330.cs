@@ -178,4 +178,80 @@ public class Problems_0321_0330
         // Any power of three will be a divisor of 1162261467
         return n > 0 && (1162261467 % n == 0);
     }
+
+    /// <summary>
+    /// Problem 327
+    /// </summary>
+    /// <param name="nums"></param>
+    /// <param name="lower"></param>
+    /// <param name="upper"></param>
+    /// <returns></returns>
+    public static int CountRangeSum(int[] nums, int lower, int upper)
+    {
+        // Array to compute prefix sums
+        long[] prefixSums = new long[nums.Length + 1];
+        for (int i = 0; i < nums.Length; i++)
+        {
+            // Each element in prefixSums represents the sum of elements from the start up to the current index
+            prefixSums[i + 1] = prefixSums[i] + nums[i];
+        }
+
+        return CountWhileSorting(prefixSums, 0, prefixSums.Length, lower, upper);
+
+        // Count range sums while sorting
+        static int CountWhileSorting(long[] sums, int start, int end, int lower, int upper)
+        {
+            // Base case: if the range has 1 or fewer elements, no valid range sums can be found
+            if (end - start <= 1)
+            {
+                return 0;
+            }
+
+            int mid = (start + end) / 2;
+            // Count the number of valid range sums in each half and sum them up
+            int count = CountWhileSorting(sums, start, mid, lower, upper) + CountWhileSorting(sums, mid, end, lower, upper);
+
+            // Initialize pointers for the right half
+            int j = mid;
+            int k = mid;
+            int l = mid;
+
+            // Temporary array to store merged and sorted prefix sums
+            long[] cache = new long[end - start];
+            int r = 0;
+
+            // Iterate over each prefix sum in the left half
+            for (int i = start; i < mid; i++)
+            {
+                // Move the pointer k to find the first prefix sum in the right half
+                // where the difference is at least `lower`
+                while (k < end && sums[k] - sums[i] < lower)
+                {
+                    k++;
+                }
+
+                // Move the pointer j to find the first prefix sum in the right half
+                // where the difference is greater than `upper`
+                while (j < end && sums[j] - sums[i] <= upper)
+                {
+                    j++;
+                }
+
+                // Merge the two halves while keeping them sorted
+                while (l < end && sums[l] < sums[i])
+                {
+                    cache[r++] = sums[l++];
+                }
+
+                // Add the current prefix sum from the left half to the cache
+                cache[r++] = sums[i];
+                // The number of valid range sums for the current prefix sum in the left half
+                count += j - k;
+            }
+
+            // Copy the sorted elements back into the original sums array
+            Array.Copy(cache, 0, sums, start, l - start);
+            return count;
+        }
+    }
 }
