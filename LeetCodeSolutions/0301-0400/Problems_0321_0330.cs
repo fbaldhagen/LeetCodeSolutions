@@ -1,4 +1,6 @@
-﻿namespace LeetCodeSolutions._0301_0400;
+﻿using LeetCodeSolutions.Structures;
+
+namespace LeetCodeSolutions._0301_0400;
 
 public class Problems_0321_0330
 {
@@ -255,4 +257,32 @@ public class Problems_0321_0330
         }
     }
 
+    /// <summary>
+    /// Problem 328
+    /// </summary>
+    /// <param name="head"></param>
+    /// <returns></returns>
+    public static ListNode OddEvenList(ListNode head)
+    {
+        if (head is null || head.next is null)
+        {
+            return head;
+        }
+
+        ListNode odd = head;
+        ListNode even = head.next;
+        ListNode evenHead = even;
+
+        while (even is not null && even.next is not null)
+        {
+            odd.next = even.next;
+            odd = odd.next;
+            even.next = odd.next;
+            even = even.next;
+        }
+
+        odd.next = evenHead;
+
+        return head;
+    }
 }
