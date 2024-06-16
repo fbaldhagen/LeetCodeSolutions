@@ -287,6 +287,61 @@ public class Problems_0321_0330
     }
 
     /// <summary>
+    /// Problem 329
+    /// </summary>
+    /// <param name="matrix"></param>
+    /// <returns></returns>
+    public static int LongestIncreasingPath(int[][] matrix)
+    {
+        if (matrix == null || matrix.Length == 0 || matrix[0].Length == 0)
+        {
+            return 0;
+        }
+
+        int m = matrix.Length;
+        int n = matrix[0].Length;
+        int[,] memo = new int[m, n];
+        int maxLength = 0;
+
+        for (int i = 0; i < m; i++)
+        {
+            for (int j = 0; j < n; j++)
+            {
+                maxLength = Math.Max(maxLength, DFS(matrix, i, j, memo));
+            }
+        }
+
+        return maxLength;
+
+        static int DFS(int[][] matrix, int i, int j, int[,] memo)
+        {
+            if (memo[i, j] != 0)
+            {
+                return memo[i, j];
+            }
+
+            int max = 1;
+
+            int[][] directions = [[0, 1], [1, 0], [0, -1], [-1, 0]];
+
+            foreach (var dir in directions)
+            {
+                int x = i + dir[0];
+                int y = j + dir[1];
+
+                if (x >= 0 && x < matrix.Length && y >= 0 && y < matrix[0].Length && matrix[x][y] > matrix[i][j])
+                {
+                    int len = 1 + DFS(matrix, x, y, memo);
+                    max = Math.Max(max, len);
+                }
+            }
+
+            memo[i, j] = max;
+            return max;
+        }
+    }
+
+    /// <summary>
     /// Problem 330
     /// </summary>
     /// <param name="nums"></param>
