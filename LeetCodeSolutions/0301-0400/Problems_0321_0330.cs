@@ -285,4 +285,44 @@ public class Problems_0321_0330
 
         return head;
     }
+
+    /// <summary>
+    /// Problem 330
+    /// </summary>
+    /// <param name="nums"></param>
+    /// <param name="n"></param>
+    /// <returns></returns>
+    public static int MinPatches(int[] nums, int n)
+    {
+        // Track smallest number that cant be formed
+        long miss = 1;
+        // Index to iterate through nums
+        int i = 0;
+        // Count number of patches
+        int patches = 0;
+
+        // Cover all numbers up to n
+        while (miss <= n)
+        {
+            // i in bounds and nums[i] is less than or equal to miss.
+            
+            if (i < nums.Length && nums[i] <= miss)
+            {
+                // We can use nums[i] to form new sums, update miss to miss + nums[i]
+                miss += nums[i];
+                // Increment i by 1
+                i++;
+            }
+            // If nums[i] is greater than miss or i is out of bounds, it means miss is the smallest
+            // number that cannot be formed, so we patch by adding miss to the array
+            else
+            {
+                // This doubles miss (since we can now form all sums up to 2 * miss - 1), and increment the patches count.
+                miss += miss;
+                patches++;
+            }
+        }
+
+        return patches;
+    }
 }
