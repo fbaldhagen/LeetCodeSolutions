@@ -34,4 +34,48 @@ public class Problems_0331_0340
 
         return slots == 0;
     }
+
+    /// <summary>
+    /// Problem 332
+    /// </summary>
+    /// <param name="tickets"></param>
+    /// <returns></returns>
+    public static IList<string> FindItinerary(IList<IList<string>> tickets)
+    {
+        // Build the graph using a dictionary of lists
+        var graph = new Dictionary<string, List<string>>();
+        foreach (var ticket in tickets)
+        {
+            if (!graph.TryGetValue(ticket[0], out List<string>? value))
+            {
+                value = ([]);
+                graph[ticket[0]] = value;
+            }
+
+            value.Add(ticket[1]);
+        }
+
+        // Sort the adjacency lists to ensure lexical order
+        foreach (var list in graph.Values)
+        {
+            list.Sort();
+        }
+
+        List<string> result = [];
+        Stack<string> stack = new();
+        stack.Push("JFK"); // Start DFS from JFK
+
+        while (stack.Count > 0)
+        {
+            while (graph.ContainsKey(stack.Peek()) && graph[stack.Peek()].Count > 0)
+            {
+                var next = graph[stack.Peek()].First(); // Get smallest lexical airport
+                graph[stack.Peek()].Remove(next); // Remove the used ticket
+                stack.Push(next); // Push the next airport onto the stack
+            }
+            result.Insert(0, stack.Pop()); // Insert into result list in reverse order
+        }
+
+        return result;
+    }
 }
