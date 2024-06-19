@@ -78,4 +78,37 @@ public class Problems_0331_0340
 
         return result;
     }
+
+    /// <summary>
+    /// Problem 334
+    /// </summary>
+    /// <param name="nums"></param>
+    /// <returns></returns>
+    public static bool IncreasingTriplet(int[] nums)
+    {
+        int first = int.MaxValue;
+        int second = int.MaxValue;
+
+        foreach (int num in nums)
+        {
+            if (num <= first)
+            {
+                // Update first if num is smaller than first
+                first = num; 
+            }
+            else if (num <= second)
+            {
+                // Update second if num is smaller than second but greater than first
+                second = num; 
+            }
+            else
+            {
+                // If we find a number greater than both first and second, we found our triplet
+                return true;
+            }
+        }
+
+        // If no increasing triplet is found after traversing entire array.
+        return false; 
+    }
 }
