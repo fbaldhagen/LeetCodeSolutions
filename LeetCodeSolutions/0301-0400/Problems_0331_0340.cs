@@ -112,5 +112,37 @@ public class Problems_0331_0340
         return false; 
     }
 
+    /// <summary>
+    /// Problem 335
+    /// </summary>
+    /// <param name="distance"></param>
+    /// <returns></returns>
+    public static bool IsSelfCrossing(int[] distance)
+    {
+        int n = distance.Length;
 
+        for (int i = 3; i < n; i++)
+        {
+            // Fourth line crosses the first line and onward for similar configurations
+            if (distance[i] >= distance[i - 2] && distance[i - 1] <= distance[i - 3])
+            {
+                return true;
+            }
+
+            // Fifth line meets first line and onward for similar configurations
+            if (i >= 4 && distance[i - 1] == distance[i - 3] && distance[i] + distance[i - 4] >= distance[i - 2])
+            {
+                return true;
+            }
+
+            // Sixth line crosses first line and onward for similar configurations
+            if (i >= 5 && distance[i - 2] >= distance[i - 4] && distance[i] >= distance[i - 2] - distance[i - 4] &&
+                distance[i - 1] <= distance[i - 3] && distance[i - 1] >= distance[i - 3] - distance[i - 5])
+            {
+                return true;
+            }
+        }
+
+        return false;
+    }
 }
