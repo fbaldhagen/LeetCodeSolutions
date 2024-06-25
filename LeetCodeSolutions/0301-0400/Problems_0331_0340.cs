@@ -1,4 +1,5 @@
 ﻿namespace LeetCodeSolutions._0301_0400;
+using LeetCodeSolutions.Structures.Trie;
 
 public class Problems_0331_0340
 {
@@ -144,5 +145,71 @@ public class Problems_0331_0340
         }
 
         return false;
+    }
+
+    /// <summary>
+    /// Problem 336.
+    /// </summary>
+    /// <param name="words"></param>
+    /// <returns></returns>
+    public static IList<IList<int>> PalindromePairs(string[] words)
+    {
+        // This problem uses the Trie structure defined in the folder Structures, and the namespace LeetCodeSolutions.Structures.Trie
+        IList<IList<int>> result = [];
+        Trie trie = new();
+
+        // Insert all words into the trie
+        for (int i = 0; i < words.Length; i++)
+        {
+            trie.Insert(words[i], i);
+        }
+
+        // Search for palindrome pairs
+        for (int i = 0; i < words.Length; i++)
+        {
+            Search(words, i, trie, result);
+        }
+
+        return result;
+
+        void Search(string[] words, int index, Trie trie, IList<IList<int>> result)
+        {
+            TrieNode current = trie.root;
+            string word = words[index];
+
+            for (int j = 0; j < word.Length; j++)
+            {
+                // If remaining suffix is palindrome and there is a word in Trie
+                // that matches the prefix, we found a pair
+                if (current.IsEndOfWord && current.WordIndex != index && IsPalindrome(word, j, word.Length - 1))
+                {
+                    result.Add([index, current.WordIndex]);
+                }
+
+                if (!current.Children.TryGetValue(word[j], out current))
+                {
+                    return;
+                }
+            }
+
+            // Check the remaining words in the Trie for palindromic combinations
+            foreach (int palindromeSuffixIndex in current.PalindromeSuffixes)
+            {
+                if (index == palindromeSuffixIndex) continue;
+                result.Add([index, palindromeSuffixIndex]);
+            }
+        }
+
+        bool IsPalindrome(string word, int left, int right)
+        {
+            while (left < right)
+            {
+                if (word[left++] != word[right--])
+                {
+                    return false;
+                }
+            }
+            return true;
+        }
     }
 }
