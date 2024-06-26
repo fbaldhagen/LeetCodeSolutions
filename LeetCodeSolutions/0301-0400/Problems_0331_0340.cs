@@ -1,4 +1,6 @@
 ﻿namespace LeetCodeSolutions._0301_0400;
+
+using LeetCodeSolutions.Structures;
 using LeetCodeSolutions.Structures.Trie;
 
 public class Problems_0331_0340
@@ -174,7 +176,7 @@ public class Problems_0331_0340
 
         void Search(string[] words, int index, Trie trie, IList<IList<int>> result)
         {
-            TrieNode current = trie.root;
+            Structures.Trie.TrieNode current = trie.root;
             string word = words[index];
 
             for (int j = 0; j < word.Length; j++)
@@ -210,6 +212,37 @@ public class Problems_0331_0340
                 }
             }
             return true;
+        }
+    }
+
+    /// <summary>
+    /// Problem 337
+    /// </summary>
+    /// <param name="root"></param>
+    /// <returns></returns>
+    public static int Rob(TreeNode root)
+    {
+        (int robThis, int skipThis) result = RobSub(root);
+        return Math.Max(result.robThis, result.skipThis);
+
+        static (int robThis, int skipThis) RobSub(TreeNode? node)
+        {
+            if (node == null)
+            {
+                return (0, 0);
+            }
+
+            (int robThis, int skipThis) leftResult = RobSub(node.left);
+            (int robThis, int skipThis) rightResult = RobSub(node.right);
+
+            // If we rob the current node, we cannot rob its children
+            int robThis = node.val + leftResult.skipThis + rightResult.skipThis;
+
+            // If we skip the current node, we can take maximum of robbing or skipping its children
+            int skipThis = Math.Max(leftResult.robThis, leftResult.skipThis) +
+                           Math.Max(rightResult.robThis, rightResult.skipThis);
+
+            return (robThis, skipThis);
         }
     }
 }
