@@ -3,6 +3,26 @@
 public class Problems_0341_0350
 {
     /// <summary>
+    /// Problem 342
+    /// </summary>
+    /// <param name="n"></param>
+    /// <returns></returns>
+    public static bool IsPowerOfFour(int n)
+    {
+        // Make sure n is positive and a power of 2. If not, return false.
+        if (n <= 0 || ((n & (n - 1)) != 0))
+        {
+            return false;
+        }
+
+        // Check if the single set bit is at an even position
+        // Power of four numbers have their single '1' bit in even positions:
+        // 1 (2^0), 4 (2^2), 16 (2^4), 64 (2^6), etc.
+        // So, we can use n-1 to see if the number of trailing zeros is even
+        return (n - 1) % 3 == 0;
+    }
+
+    /// <summary>
     /// Problem 344
     /// </summary>
     /// <param name="s"></param>
