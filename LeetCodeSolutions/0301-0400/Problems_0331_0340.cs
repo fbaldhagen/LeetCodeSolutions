@@ -245,4 +245,28 @@ public class Problems_0331_0340
             return (robThis, skipThis);
         }
     }
+
+    /// <summary>
+    /// Problem 338
+    /// </summary>
+    /// <param name="n"></param>
+    /// <returns></returns>
+    public static int[] CountBits(int n)
+    {
+        // Initialize an array of size n + 1 to hold the count of 1's for each number from 0 to n
+        int[] ans = new int[n + 1];
+
+        // Iterate over each number from 1 to n
+        for (int i = 1; i <= n; i++)
+        {
+            // Calculate the number of 1's in the binary representation of i
+            // ans[i >> 1] gives the number of 1's in i / 2
+            // (i & 1) adds 1 if the least significant bit of i is 1 (i is odd), otherwise adds 0
+            ans[i] = ans[i >> 1] + (i & 1);
+        }
+
+        // Return the array containing the count of 1's for each number from 0 to n
+        return ans;
+    }
+
 }
