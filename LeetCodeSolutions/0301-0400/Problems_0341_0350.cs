@@ -205,6 +205,63 @@ public class Problems_0341_0350
     }
 
     /// <summary>
+    /// Problem 347
+    /// </summary>
+    /// <param name="nums"></param>
+    /// <param name="k"></param>
+    /// <returns></returns>
+    public static int[] TopKFrequent(int[] nums, int k)
+    {
+        // Dictionary to store the frequency of each element
+        Dictionary<int, int> frequencyMap = [];
+
+        foreach (int num in nums)
+        {
+            if (frequencyMap.TryGetValue(num, out int value))
+            {
+                frequencyMap[num] = ++value;
+            }
+            else
+            {
+                frequencyMap[num] = 1;
+            }
+        }
+
+        // Using a min-heap to keep track of the top k elements, SortedDictionary here
+        SortedDictionary<int, List<int>> frequencyHeap = [];
+
+        foreach (KeyValuePair<int, int> pair in frequencyMap)
+        {
+            int frequency = pair.Value;
+            int num = pair.Key;
+
+            if (!frequencyHeap.TryGetValue(frequency, out List<int>? value))
+            {
+                value = [];
+                frequencyHeap[frequency] = value;
+            }
+
+            value.Add(num);
+        }
+
+        List<int> result = [];
+
+        foreach (int frequency in frequencyHeap.Keys.Reverse())
+        {
+            foreach (int num in frequencyHeap[frequency])
+            {
+                result.Add(num);
+                if (result.Count == k)
+                {
+                    return [.. result];
+                }
+            }
+        }
+
+        return [.. result];
+    }
+
+    /// <summary>
     /// Problem 349
     /// </summary>
     /// <param name="nums1"></param>
