@@ -1,4 +1,6 @@
-﻿namespace LeetCodeSolutions._0301_0400;
+﻿using System.Collections.Immutable;
+
+namespace LeetCodeSolutions._0301_0400;
 
 public class Problems_0341_0350
 {
@@ -159,6 +161,47 @@ public class Problems_0341_0350
             (s[i], s[s.Length - 1 - i]) = (s[s.Length - 1 - i], s[i]);
             i++;
         }
+    }
+
+    /// <summary>
+    /// Problem 345
+    /// </summary>
+    /// <param name="s"></param>
+    /// <returns></returns>
+    public static string ReverseVowels(string s)
+    {
+        if (s.Length == 1 || s.Length == 0)
+        {
+            return s;
+        }
+
+        char[] sArr = s.ToCharArray();
+        int left = 0;
+        int right = sArr.Length - 1;
+
+        HashSet<char> vowels = ['a', 'e', 'i', 'o', 'u', 'A', 'E', 'I', 'O', 'U'];
+
+        while (left < right)
+        {
+            while (left < right && !vowels.Contains(sArr[left]))
+            {
+                left++;
+            }
+
+            while (left < right && !vowels.Contains(sArr[right]))
+            {
+                right--;
+            }
+
+            if (vowels.Contains(sArr[left]) && vowels.Contains(sArr[right]))
+            {
+                (sArr[left], sArr[right]) = (sArr[right], sArr[left]);
+                left++;
+                right--;
+            }
+        }
+
+        return new string(sArr);
     }
 
     /// <summary>
