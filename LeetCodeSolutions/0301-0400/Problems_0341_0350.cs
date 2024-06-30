@@ -118,6 +118,34 @@ public class Problems_0341_0350
     }
 
     /// <summary>
+    /// Problem 343
+    /// </summary>
+    /// <param name="n"></param>
+    /// <returns></returns>
+    public static int IntegerBreak(int n)
+    {
+        // Base cases: for n = 2 and n = 3, the maximum product is n-1
+        if (n <= 3)
+        {
+            return n - 1;
+        }
+
+        int product = 1;
+
+        // While n is greater than 4, multiply product by 3 and decrease n by 3
+        while (n > 4)
+        {
+            product *= 3;
+            n -= 3;
+        }
+
+        // Multiply the remaining n to the product
+        product *= n;
+
+        return product;
+    }
+
+    /// <summary>
     /// Problem 344
     /// </summary>
     /// <param name="s"></param>
