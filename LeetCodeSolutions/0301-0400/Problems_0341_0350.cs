@@ -3,6 +3,101 @@
 public class Problems_0341_0350
 {
     /// <summary>
+    /// Problem 341
+    /// </summary>
+    public class Problem341
+    {
+        public class NestedIterator
+        {
+            private readonly Stack<NestedInteger> stack;
+
+            public NestedIterator(IList<NestedInteger> nestedList)
+            {
+                stack = new Stack<NestedInteger>();
+                // Initialize the stack with the elements in reverse order
+                for (int i = nestedList.Count - 1; i >= 0; i--)
+                {
+                    stack.Push(nestedList[i]);
+                }
+            }
+
+            public bool HasNext()
+            {
+                while (stack.Count > 0)
+                {
+                    NestedInteger current = stack.Peek();
+                    if (current.IsInteger())
+                    {
+                        return true;
+                    }
+                    // Pop the list and push its elements in reverse order
+                    stack.Pop();
+                    IList<NestedInteger> nestedList = current.GetList();
+                    for (int i = nestedList.Count - 1; i >= 0; i--)
+                    {
+                        stack.Push(nestedList[i]);
+                    }
+                }
+                return false;
+            }
+
+            public int Next()
+            {
+                if (HasNext())
+                {
+                    return stack.Pop().GetInteger();
+                }
+                throw new InvalidOperationException("No more elements");
+            }
+        }
+
+        // The interface and class below are not needed for the LC solution, only added to comply with naming conventions in .NET.
+        // Interface should be INestedInteger, but we use NestedInteger in the problem. Class above in enough.
+        public interface INestedInteger
+        {
+            /// <summary>
+            /// Return true if this NestedInteger holds a single integer, rather than a nested list.
+            /// </summary>
+            /// <returns></returns>
+            bool IsInteger();
+
+            /// <summary>
+            /// Return the single integer that this NestedInteger holds, if it holds a single integer
+            /// Return null if this NestedInteger holds a nested list
+            /// </summary>
+            /// <returns></returns>
+            int GetInteger();
+
+            /// <summary>
+            /// Return the nested list that this NestedInteger holds, if it holds a nested list <br/>
+            /// Return null if this NestedInteger holds a single integer
+            /// </summary>
+            /// <returns></returns>
+            IList<NestedInteger> GetList();
+        }
+
+        // Not needed for solution
+        public class NestedInteger : INestedInteger
+        {
+            public int GetInteger()
+            {
+                throw new NotImplementedException();
+            }
+
+            public IList<NestedInteger> GetList()
+            {
+                throw new NotImplementedException();
+            }
+
+            public bool IsInteger()
+            {
+                throw new NotImplementedException();
+            }
+        }
+    }
+
+
+    /// <summary>
     /// Problem 342
     /// </summary>
     /// <param name="n"></param>
