@@ -60,4 +60,77 @@ public class Problems_0351_0360
             return [.. intervals];
         }
     }
+
+    /// <summary>
+    /// Problem 354
+    /// </summary>
+    /// <param name="envelopes"></param>
+    /// <returns></returns>
+    public static int MaxEnvelopes(int[][] envelopes)
+    {
+        // Sort envelopes by width in ascending order.
+        // If two envelopes have the same width, sort by height in descending order.
+        Array.Sort(envelopes, (a, b) =>
+        {
+            if (a[0] == b[0])
+            {
+                // If widths are the same, sort by height in descending order.
+                return b[1].CompareTo(a[1]);
+            }
+            else
+            {
+                // Otherwise, sort by width in ascending order.
+                return a[0].CompareTo(b[0]);
+            }
+        });
+
+        // List to store the heights of the longest increasing subsequence (LIS).
+        List<int> maxLength = new(envelopes.Length);
+
+        // Iterate over each envelope after sorting.
+        foreach (int[] envelope in envelopes)
+        {
+            // Insert the height of the current envelope into the LIS.
+            Insert(envelope[1]);
+        }
+
+        // The length of maxLength list represents the maximum number of envelopes that can be Russian-dolled.
+        return maxLength.Count;
+
+        // Helper method to insert the height into the LIS.
+        void Insert(int height)
+        {
+            int left = 0;
+            int right = maxLength.Count - 1;
+
+            // Binary search to find the correct position to insert the height.
+            while (left <= right)
+            {
+                int mid = (left + right) / 2;
+
+                if (maxLength[mid] > height && (mid - 1 < 0 || height > maxLength[mid - 1]))
+                {
+                    // Replace the height at the correct position to maintain the smallest possible values.
+                    maxLength[mid] = height;
+                    break;
+                }
+                else if (maxLength[mid] < height)
+                {
+                    // If the current height is greater, move the left pointer to mid + 1.
+                    left = mid + 1;
+                }
+                else
+                {
+                    // If the current height is smaller, move the right pointer to mid - 1.
+                    right = mid - 1;
+                }
+            }
+
+            // If the height is larger than all elements in maxLength, append it to the end.
+            if (left == maxLength.Count)
+            {
+                maxLength.Add(height);
+            }
+        }
+    }
 }
