@@ -1,4 +1,5 @@
 ﻿using System.Collections.Immutable;
+using System.Diagnostics.Metrics;
 
 namespace LeetCodeSolutions._0301_0400;
 
@@ -278,6 +279,87 @@ public class Problems_0341_0350
             if (set1.Contains(nums2[i]))
             {
                 intersection.Add(nums2[i]);
+            }
+        }
+
+        return [.. intersection];
+    }
+
+    /// <summary>
+    /// Problem 350
+    /// </summary>
+    /// <param name="nums1"></param>
+    /// <param name="nums2"></param>
+    /// <returns></returns>
+    public static int[] Intersect(int[] nums1, int[] nums2)
+    {
+        // Make sure nums2 is the longer one
+        if (nums1.Length > nums2.Length)
+        {
+            return Intersect(nums2, nums1);
+        }
+
+        // Count elements in the smaller array and iterate over the larger array
+        Dictionary<int, int> countMap = [];
+        List<int> intersection = [];
+
+        foreach (int num in nums1)
+        {
+            if (!countMap.TryGetValue(num, out int value))
+            {
+                value = 0;
+                countMap[num] = value;
+            }
+            countMap[num] = ++value;
+        }
+
+        foreach (int num in nums2)
+        {
+            if (countMap.TryGetValue(num, out int count) && count > 0)
+            {
+                intersection.Add(num);
+                countMap[num]--;
+            }
+        }
+
+        return [.. intersection];
+    }
+
+    /// <summary>
+    /// Problem 350, alternative solution
+    /// </summary>
+    /// <remarks>If the arrays are sorted this runs in linear time.</remarks>
+    /// <param name="nums1"></param>
+    /// <param name="nums2"></param>
+    /// <returns></returns>
+    public static int[] IntersectII(int[] nums1, int[] nums2)
+    {
+        // Make sure arrays are sorted.
+        Array.Sort(nums1);
+        Array.Sort(nums2);
+        
+        List<int> intersection = [];
+
+        // Use two pointers to determine intersection in one pass
+        int i = 0;
+        int j = 0;
+
+        // Run as long as both pointers are in bounds
+        while (i < nums1.Length && j < nums2.Length)
+        {
+            if (nums1[i] < nums2[j])
+            {
+                i++;
+            }
+            else if (nums1[i] > nums2[j])
+            {
+                j++;
+            }
+            else
+            {
+                intersection.Add(nums1[i]);
+                i++;
+                j++;
             }
         }
 
