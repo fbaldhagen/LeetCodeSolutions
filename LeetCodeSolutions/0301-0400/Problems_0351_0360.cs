@@ -133,4 +133,76 @@ public class Problems_0351_0360
             }
         }
     }
+
+    /// <summary>
+    /// Problem 355
+    /// </summary>
+    public class Twitter
+    {
+        public List<Tweet> tweets;
+        public Dictionary<int, List<int>> followers;
+
+        public Twitter()
+        {
+            tweets = [];
+            followers = [];
+        }
+
+        public void PostTweet(int userId, int tweetId)
+        {
+            tweets.Add(new Tweet(userId, tweetId));
+        }
+
+        public List<int> GetNewsFeed(int userId)
+        {
+            List<int> tw = [];
+            int conta = 0;
+            for (int i = tweets.Count - 1; (conta < 10) && i >= 0; i--)
+            {
+                int us = tweets[i].user;
+                if (us == userId)
+                {
+                    tw.Add(tweets[i].tweet);
+                    conta++;
+                }
+                else
+                {
+                    if (followers.TryGetValue(userId, out List<int>? value) && value.Contains(us))
+                    {
+                        tw.Add(tweets[i].tweet);
+                        conta++;
+                    }
+                }
+            }
+            return tw;
+        }
+
+        public void Follow(int followerId, int followeeId)
+        {
+            if (followers.TryGetValue(followerId, out List<int>? value))
+            {
+                if (!value.Contains(followeeId))
+                    value.Add(followeeId);
+            }
+            else
+            {
+                followers.Add(followerId, []);
+                followers[followerId].Add(followeeId);
+            }
+        }
+
+        public void Unfollow(int followerId, int followeeId)
+        {
+            if (followers.TryGetValue(followerId, out List<int>? value))
+            {
+                value.Remove(followeeId);
+            }
+        }
+
+        public class Tweet(int user, int tweet)
+        {
+            public int user = user;
+            public int tweet = tweet;
+        }
+    }
 }
