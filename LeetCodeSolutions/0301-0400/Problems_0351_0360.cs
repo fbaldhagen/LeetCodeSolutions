@@ -1,6 +1,4 @@
-﻿using static System.Runtime.InteropServices.JavaScript.JSType;
-
-namespace LeetCodeSolutions._0301_0400;
+﻿namespace LeetCodeSolutions._0301_0400;
 
 public class Problems_0351_0360
 {
