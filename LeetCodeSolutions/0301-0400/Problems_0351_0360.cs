@@ -1,4 +1,6 @@
-﻿namespace LeetCodeSolutions._0301_0400;
+﻿using static System.Runtime.InteropServices.JavaScript.JSType;
+
+namespace LeetCodeSolutions._0301_0400;
 
 public class Problems_0351_0360
 {
@@ -204,5 +206,48 @@ public class Problems_0351_0360
             public int user = user;
             public int tweet = tweet;
         }
+    }
+
+    /// <summary>
+    /// Problem 357
+    /// </summary>
+    /// <param name="n"></param>
+    /// <returns></returns>
+    public static int CountNumbersWithUniqueDigits(int n)
+    {
+        // n == 0 -> 0 <= x < 1. Only 0, so count 1.
+        if (n == 0)
+        {
+            return 1;
+        }
+
+        // n == 1 -> 0 <= x < 10. 0,1,2,3,4,5,6,7,8,9
+        if (n == 1)
+        {
+            return 10;
+        }
+
+        // For n > 1, we need to count all numbers x in 0 <= x < 10^n - 1 that have unique digits.
+
+        // The first digit has 9 options (1-9), the second digit has 9 options (0-9 excluding the first digit),
+        // the third digit has 8 options (excluding the first two digits), and so on.
+
+        // The general formula for n>0n>0 would be: f(k)=9×9×8×7×…×(10−k+1), where k is the length of the number being considered. 
+
+        // count starts at 10 because there are 10 unique single-digit numbers. (0,1,2,3,4,5,6,7,8,9)
+        int count = 10;
+        // uniqueDigits is initialized to 9, representing the number of choices for the first digit(1 - 9).
+        int uniqueDigits = 9;
+        // availableNumber is initialized to 9, representing the number of choices for the subsequent digits (0-9 excluding already chosen digits).
+        int availableNumber = 9;
+
+        for (int i = 2; i <= n && availableNumber > 0; i++)
+        {
+            uniqueDigits *= availableNumber;
+            count += uniqueDigits;
+            availableNumber--;
+        }
+
+        return count;
     }
 }
