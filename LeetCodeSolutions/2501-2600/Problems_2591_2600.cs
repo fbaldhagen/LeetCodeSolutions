@@ -56,3 +56,4 @@ public class Problems_2591_2600
             return countWithoutCurrent + countWithCurrent;
         }
     }
+}
