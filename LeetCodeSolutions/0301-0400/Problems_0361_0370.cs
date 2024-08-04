@@ -125,4 +125,59 @@ public class Problems_0361_0370
 
         return false;
     }
+
+    /// <summary>
+    /// Problem 368
+    /// </summary>
+    /// <param name="nums"></param>
+    /// <returns></returns>
+    public static IList<int> LargestDivisibleSubset(int[] nums)
+    {
+        // Sort the array to ensure that for any i < j, nums[j] % nums[i] can be easily checked
+        Array.Sort(nums);
+
+        // dp[i] will store the size of the largest divisible subset that ends with nums[i]
+        int[] dp = new int[nums.Length];
+
+        // previous[i] will store the index of the previous element in the largest divisible subset ending at nums[i]
+        int[] previous = new int[nums.Length];
+
+        // Initialize variables to track the index of the largest subset's end
+        int maxIndex = 0;
+
+        for (int i = 0; i < nums.Length; i++)
+        {
+            dp[i] = 1; // Each number is divisible by itself, so minimum subset length is 1
+            previous[i] = -1; // Initialize with -1 meaning no previous element
+
+            for (int j = 0; j < i; j++)
+            {
+                // Check if nums[i] is divisible by nums[j] and update dp and previous accordingly
+                if (nums[i] % nums[j] == 0 && dp[j] + 1 > dp[i])
+                {
+                    dp[i] = dp[j] + 1;
+                    previous[i] = j;
+                }
+            }
+
+            // Update maxIndex if we find a larger subset
+            if (dp[i] > dp[maxIndex])
+            {
+                maxIndex = i;
+            }
+        }
+
+        // Backtrack to find the largest divisible subset
+        List<int> result = [];
+        int k = maxIndex;
+        while (k >= 0)
+        {
+            result.Add(nums[k]);
+            k = previous[k];
+        }
+
+        // Reverse the result to get the correct order
+        result.Reverse();
+        return result;
+    }
 }
