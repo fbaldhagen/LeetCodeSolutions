@@ -57,4 +57,39 @@ public class Problems_0361_0370
             return maxSum;
         }
     }
+
+    /// <summary>
+    /// Problem 365
+    /// </summary>
+    /// <param name="x"></param>
+    /// <param name="y"></param>
+    /// <param name="target"></param>
+    /// <returns></returns>
+    public static bool CanMeasureWater(int x, int y, int target)
+    {
+        // This problem can be reduced to a problem of finding whether
+        // the target amount can be obtained using combinations of x and y
+        // based on the Bézout's identity (ax + by = gcd(x, y))
+
+        // Method to find the greatest common divisor
+        static int Gcd(int a, int b)
+        {
+            while (b != 0)
+            {
+                int temp = b;
+                b = a % b;
+                a = temp;
+            }
+            return a;
+        }
+
+        // If target is greater than the sum of x and y, it is impossible to measure
+        if (target > x + y)
+        {
+            return false;
+        }
+
+        // Check if target is a multiple of the gcd of x and y
+        return target % Gcd(x, y) == 0;
+    }
 }
