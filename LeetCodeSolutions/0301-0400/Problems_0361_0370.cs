@@ -92,4 +92,37 @@ public class Problems_0361_0370
         // Check if target is a multiple of the gcd of x and y
         return target % Gcd(x, y) == 0;
     }
+
+    /// <summary>
+    /// Problem 367
+    /// </summary>
+    /// <param name="num"></param>
+    /// <returns></returns>
+    public static bool IsPerfectSquare(int num)
+    {
+        // Binary search approach to determine if num is a perfect square
+        long left = 1;
+        long right = num;
+
+        while (left <= right)
+        {
+            long mid = left + (right - left) / 2;
+            long square = mid * mid;
+
+            if (square == num)
+            {
+                return true;
+            }
+            else if (square < num)
+            {
+                left = mid + 1;
+            }
+            else
+            {
+                right = mid - 1;
+            }
+        }
+
+        return false;
+    }
 }
