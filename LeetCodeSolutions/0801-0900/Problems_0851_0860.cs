@@ -56,4 +56,59 @@ public class Problems_0851_0860
         // Return the minimum total cost of hiring k workers satisfying the conditions
         return result;
     }
+
+    /// <summary>
+    /// Problem 860
+    /// </summary>
+    /// <param name="bills"></param>
+    /// <returns></returns>
+    public static bool LemonadeChange(int[] bills)
+    {
+        // Variables to keep track of the number of $5 and $10 bills.
+        int five = 0;
+        int ten = 0;
+
+        foreach (int bill in bills)
+        {
+            // If the customer pays with a $5 bill, simply increase the count of $5 bills.
+            if (bill == 5)
+            {
+                five++;
+            }
+            // If the customer pays with a $10 bill, we need to give back $5 as change.
+            else if (bill == 10)
+            {
+                if (five > 0)
+                {
+                    five--;
+                    ten++;
+                }
+                else
+                {
+                    return false;
+                }
+            }
+            // If the customer pays with a $20 bill, we prefer to give one $10 and one $5 as change.
+            else
+            {
+                if (ten > 0 && five > 0)
+                {
+                    ten--;
+                    five--;
+                }
+                // If we don't have a $10 bill, we give three $5 bills instead.
+                else if (five >= 3)
+                {
+                    five -= 3;
+                }
+                else
+                {
+                    return false;
+                }
+            }
+        }
+
+        // If we've successfully given change to every customer, return true.
+        return true;
+    }
 }
