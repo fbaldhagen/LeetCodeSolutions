@@ -59,4 +59,36 @@ public class Problems_0621_0630
             }
         }
     }
+
+    /// <summary>
+    /// Problem 624
+    /// </summary>
+    /// <param name="arrays"></param>
+    /// <returns></returns>
+    public static int MaxDistance(IList<IList<int>> arrays)
+    {
+        // Initialize variables to store the minimum and maximum values encountered
+        int minVal = arrays[0][0];
+        int maxVal = arrays[0][arrays[0].Count - 1];
+
+        // Initialize the maximum distance to zero
+        int maxDistance = 0;
+
+        // Iterate through each array starting from the second one
+        for (int i = 1; i < arrays.Count; i++)
+        {
+            int firstElement = arrays[i][0];
+            int lastElement = arrays[i][arrays[i].Count - 1];
+
+            // Calculate the possible maximum distance using the current array
+            maxDistance = Math.Max(maxDistance, Math.Abs(lastElement - minVal));
+            maxDistance = Math.Max(maxDistance, Math.Abs(maxVal - firstElement));
+
+            // Update the min and max values based on the current array
+            minVal = Math.Min(minVal, firstElement);
+            maxVal = Math.Max(maxVal, lastElement);
+        }
+
+        return maxDistance;
+    }
 }
