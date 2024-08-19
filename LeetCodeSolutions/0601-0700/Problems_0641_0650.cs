@@ -30,4 +30,35 @@ public class Problems_0641_0650
 
         return string.Join(" ", words);
     }
+
+    /// <summary>
+    /// Problem 650
+    /// </summary>
+    /// <param name="n"></param>
+    /// <returns></returns>
+    public static int MinSteps(int n)
+    {
+        int steps = 0;
+        int divisor = 2;
+
+        // Find the smallest divisors of n
+        while (n > 1)
+        {
+            // If n is divisible by divisor, we can use the Copy All and Paste operations
+            if (n % divisor == 0)
+            {
+                // Add the divisor to the steps (copy all and then paste)
+                steps += divisor;
+                // Reduce n by dividing it by the divisor
+                n /= divisor;
+            }
+            else
+            {
+                // If not divisible, increase the divisor
+                divisor++;
+            }
+        }
+
+        return steps;
+    }
 }
