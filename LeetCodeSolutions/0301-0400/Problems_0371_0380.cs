@@ -71,4 +71,45 @@ public class Problems_0371_0380
             }
         }
     }
+
+    /// <summary>
+    /// Problem 373
+    /// </summary>
+    /// <param name="nums1"></param>
+    /// <param name="nums2"></param>
+    /// <param name="k"></param>
+    /// <returns></returns>
+    public static IList<IList<int>> KSmallestPairs(int[] nums1, int[] nums2, int k)
+    {
+        List<IList<int>> result = [];
+        if (nums1.Length == 0 || nums2.Length == 0 || k == 0)
+        {
+            return result;
+        }
+
+        // Min-heap to store pairs (sum, index1, index2) with sum being the priority
+        PriorityQueue<(int sum, int i, int j), int> minHeap = new();
+
+        // Initialize the heap with pairs (nums1[0] + nums2[j], 0, j) for j from 0 to nums2.Length - 1
+        for (int j = 0; j < nums2.Length && j < k; j++)
+        {
+            minHeap.Enqueue((nums1[0] + nums2[j], 0, j), nums1[0] + nums2[j]);
+        }
+
+        while (k > 0 && minHeap.Count > 0)
+        {
+            // Dequeue the smallest pair from the heap
+            (_, int i, int j) = minHeap.Dequeue();
+            result.Add([nums1[i], nums2[j]]);
+            k--;
+
+            // If there are more elements in nums1, enqueue the next pair (nums1[i + 1], nums2[j])
+            if (i + 1 < nums1.Length)
+            {
+                minHeap.Enqueue((nums1[i + 1] + nums2[j], i + 1, j), nums1[i + 1] + nums2[j]);
+            }
+        }
+
+        return result;
+    }
 }
