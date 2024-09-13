@@ -168,6 +168,35 @@ public class Problems_0371_0380
         }
     }
 
+    /// <summary>
+    /// Problem 375
+    /// </summary>
+    /// <param name="n"></param>
+    /// <returns></returns>
+    public static int GetMoneyAmount(int n)
+    {
+        int[,] dp = new int[n + 1, n + 1];
+
+        for (int i = 1; i < n; i++)
+        {
+            dp[i, i + 1] = i;
+        }
+
+        for (int len = 3; len <= n; len++)
+        {
+            for (int i = 1; i <= n - len + 1; i++)
+            {
+                int cost = int.MaxValue;
+                int j = len + i - 1;
+                for (int k = i; k <= j; k++)
+                {
+                    cost = Math.Min(cost, k + Math.Max((k - 1 < i ? 0 : dp[i, k - 1]), (k + 1 > j ? 0 : dp[k + 1, j])));
+                }
+                dp[i, j] = cost;
+            }
+        }
+        return dp[1, n];
+    }
 
     /// <summary>
     /// Problem 376
