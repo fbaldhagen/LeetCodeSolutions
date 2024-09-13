@@ -114,6 +114,62 @@ public class Problems_0371_0380
     }
 
     /// <summary>
+    /// Problem 374
+    /// </summary>
+    /// <param name="n"></param>
+    /// <returns></returns>
+    public static int GuessNumber(int n)
+    {
+        // This is not a part of the solution, just a way to get guesses and check them.
+        Random r = new();
+        int number = r.Next(1, n + 1);
+
+
+        int left = 1;
+        int right = n;
+
+        while (left <= right)
+        {
+            int mid = left + (right - left) / 2;
+
+            int ans = guess(mid);
+
+            if (ans == -1)
+            {
+                right = mid - 1;
+            }
+            else if (ans == 1)
+            {
+                left = mid + 1;
+            }
+            else
+            {
+                return mid;
+            }
+        }
+
+        return -1;
+
+        // Placeholder
+        int guess(int val)
+        {
+            if (val < number)
+            {
+                return -1;
+            }
+            else if (val > number)
+            {
+                return 1;
+            }
+            else
+            {
+                return 0;
+            }
+        }
+    }
+
+
+    /// <summary>
     /// Problem 376
     /// </summary>
     /// <param name="nums"></param>
