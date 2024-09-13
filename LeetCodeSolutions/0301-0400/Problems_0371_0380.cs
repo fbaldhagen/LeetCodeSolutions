@@ -112,4 +112,37 @@ public class Problems_0371_0380
 
         return result;
     }
+
+    /// <summary>
+    /// Problem 376
+    /// </summary>
+    /// <param name="nums"></param>
+    /// <returns></returns>
+    public static int WiggleMaxLength(int[] nums)
+    {
+        int n = nums.Length;
+        // Trivial wiggle sequences
+        if (n == 1 || (n == 2 && nums[0] != nums[1]))
+        {
+            return n;
+        }
+
+        // Track lengths of sequences that end in an up or down wiggle
+        int up = 1;
+        int down = 1;
+
+        for (int i = 1; i < n; i++)
+        {
+            if (nums[i] > nums[i - 1])
+            {
+                up = down + 1;
+            }
+            else if (nums[i] < nums[i - 1])
+            {
+                down = up + 1;
+            }
+        }
+
+        return (up >= down) ? up : down;
+    }
 }
