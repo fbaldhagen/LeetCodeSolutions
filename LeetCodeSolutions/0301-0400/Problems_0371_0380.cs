@@ -230,4 +230,32 @@ public class Problems_0371_0380
 
         return (up >= down) ? up : down;
     }
+
+    /// <summary>
+    /// Problem 377
+    /// </summary>
+    /// <param name="nums"></param>
+    /// <param name="target"></param>
+    /// <returns></returns>
+    public static int CombinationSum4(int[] nums, int target)
+    {
+        // Create a DP array where dp[i] is the number of ways to get sum i
+        int[] dp = new int[target + 1];
+        dp[0] = 1;  // Base case: There's one way to make sum 0 (use no elements)
+
+        // Fill the DP array
+        for (int i = 1; i <= target; i++)
+        {
+            foreach (int num in nums)
+            {
+                if (i - num >= 0)
+                {
+                    dp[i] += dp[i - num];
+                }
+            }
+        }
+
+        return dp[target];  // The answer is dp[target]
+    }
+
 }
