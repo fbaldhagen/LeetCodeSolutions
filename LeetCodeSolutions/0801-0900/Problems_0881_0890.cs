@@ -38,4 +38,28 @@ public class Problems_0881_0890
 
         return boats;
     }
+
+    /// <summary>
+    /// Problem 884
+    /// </summary>
+    /// <param name="s1"></param>
+    /// <param name="s2"></param>
+    /// <returns></returns>
+    public static string[] UncommonFromSentences(string s1, string s2)
+    {
+        Dictionary<string, int> map = [];
+
+        string[] words1 = s1.Split(' ');
+        string[] words2 = s2.Split(' ');
+
+        IEnumerable<string> allWords = words1.Concat(words2);
+
+        string[] uncommonWords = allWords
+            .GroupBy(word => word)
+            .Where(g => g.Count() == 1)
+            .Select(g => g.Key)
+            .ToArray();
+
+        return uncommonWords;
+    }
 }
