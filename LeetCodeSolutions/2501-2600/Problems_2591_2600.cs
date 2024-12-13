@@ -3,6 +3,48 @@
 public class Problems_2591_2600
 {
     /// <summary>
+    /// Problem 2593
+    /// </summary>
+    /// <param name="nums"></param>
+    /// <returns></returns>
+    public static long FindScore(int[] nums)
+    {
+        int n = nums.Length;
+        bool[] marked = new bool[n];
+        long score = 0;
+        List<int> indices = [];
+
+        for (int i = 0; i < n; i++)
+        {
+            indices.Add(i);
+        }
+        indices.Sort((i, j) => nums[i] == nums[j] ? i - j : nums[i] - nums[j]);
+
+        foreach (int index in indices)
+        {
+            if (marked[index])
+            {
+                continue;
+            }
+
+            score += nums[index];
+            marked[index] = true;
+            
+            if (index < n - 1)
+            {
+                marked[index + 1] = true;
+            }
+
+            if (index > 0)
+            {
+                marked[index - 1] = true;
+            }
+        }
+
+        return score;
+    }
+
+    /// <summary>
     /// Problem 2597
     /// </summary>
     /// <param name="nums"></param>
